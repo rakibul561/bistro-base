@@ -1,14 +1,18 @@
 
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import Fotter from '../Pagse/Shaerd/Fotter';
 import Navbar from '../Pagse/Shaerd/Navbar/Navbar';
 
 const Main = () => {
+
+    const location = useLocation();
+    console.log(location);
+    const noHeaderFooter = location.pathname.includes('login')
     return (
         <div>
-            <Navbar></Navbar>
+            {noHeaderFooter || <Navbar></Navbar>}
             <Outlet></Outlet>
-            <Fotter></Fotter>
+            {noHeaderFooter || <Fotter></Fotter>}
         </div>
     );
 };
