@@ -7,6 +7,8 @@ import Meno from "../Pagse/Menu/Meno";
 import Order from "../Pagse/OrderPagse/Order/Order";
 import Login from "../Pagse/Login/Login";
 import SignUp from "../Pagse/Login/SignUp";
+import Secret from "../Pagse/Shaerd/Secret";
+import PrivetRoutes from "./PrivetRoutes";
 
   export const router = createBrowserRouter([
     {
@@ -32,6 +34,10 @@ import SignUp from "../Pagse/Login/SignUp";
         {
           path:'/signup',
           element:<SignUp></SignUp>
+        },
+        {
+          path:'/secret',
+          element:<PrivetRoutes><Secret></Secret></PrivetRoutes>
         }
       ]
     },
