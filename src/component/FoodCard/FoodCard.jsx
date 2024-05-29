@@ -3,7 +3,10 @@
 import Swal from "sweetalert2";
 import UseAuth from "../../Hooks/UseAuth";
 import { useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
+import UseAxiosSecure from "../../Hooks/UseAxios";
+import UseCarts from "../../Hooks/UseCarts";
+
+
 
 const FoodCard = ({ item }) => {
     // Destructure the item object to extract relevant properties
@@ -13,9 +16,11 @@ const FoodCard = ({ item }) => {
     // Hooks for navigation and current location
     const navigate = useNavigate();
     const location = useLocation();
-
+    const axiosSecure = UseAxiosSecure();
+    
+    const [,refetch] = UseCarts();
     // Function to handle adding item to the cart
-    const handleAddtoCart = food => {
+    const handleAddtoCart = () => {
         if (user && user.email) {
             // If user is logged in, proceed to add to cart
             const cartItem = {
@@ -26,20 +31,21 @@ const FoodCard = ({ item }) => {
                 price
             };
             // Send cart item data to the server
-            axios.post('http://localhost:5000/carts', cartItem)
+            axiosSecure.post('/carts', cartItem)
                 .then(res => {
                     // Log success message and response data
-                    console.log('Item added to cart:', res.data);
-                })
-                .catch(error => {
-                    // Handle errors if POST request fails
-                    console.error('Error adding item to cart:', error);
-                    // Show error message to the user
-                    Swal.fire({
-                        title: "Error",
-                        text: "Failed to add item to cart. Please try again later.",
-                        icon: "error"
-                    });
+                    console.log(res.data);
+                    if(res.data.insertedId){
+                        Swal.fire({
+                          position: "top-end",
+                          icon: "success",
+                          title: `${name} added your cart`,
+                          showConfirmButton: false,
+                          timer: 2000
+                        });
+                        // reface the card 
+                        refetch();
+                    }
                 });
         } else {
             // If user is not logged in, prompt to login before adding to cart
@@ -71,7 +77,7 @@ const FoodCard = ({ item }) => {
                     <p>{recipe}</p>
                     <div className="card-actions justify-end">
                         <button
-                            onClick={() => handleAddtoCart(item)}
+                            onClick={ handleAddtoCart}
                             className="btn btn-outline bg-slate-100 btn-accent border-0 border-b-4">Add To Cart</button>
                     </div>
                 </div>

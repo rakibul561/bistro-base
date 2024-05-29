@@ -8,7 +8,9 @@ import Order from "../Pagse/OrderPagse/Order/Order";
 import Login from "../Pagse/Login/Login";
 import SignUp from "../Pagse/Login/SignUp";
 import Secret from "../Pagse/Shaerd/Secret";
-import PrivetRoutes from "./PrivetRoutes";
+import PrivetRoutes from "./PrivetRoutes";  
+import Dashboard from "../Pagse/Login/Dashboard";
+import Cart from "../Pagse/DashboardPagse/Cart/Cart";
 
   export const router = createBrowserRouter([
     {
@@ -41,4 +43,14 @@ import PrivetRoutes from "./PrivetRoutes";
         }
       ]
     },
+    {
+      path:'dashboard',
+      element:<PrivetRoutes><Dashboard></Dashboard></PrivetRoutes>, 
+      children: [
+        {
+          path:'cart',
+          element: <Cart></Cart>
+        }
+      ]
+    }
   ]);
