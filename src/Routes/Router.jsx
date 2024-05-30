@@ -11,6 +11,7 @@ import Secret from "../Pagse/Shaerd/Secret";
 import PrivetRoutes from "./PrivetRoutes";  
 import Dashboard from "../Pagse/Login/Dashboard";
 import Cart from "../Pagse/DashboardPagse/Cart/Cart";
+import Users from "../Pagse/DashboardPagse/dashboard/All Users/Users";
 
   export const router = createBrowserRouter([
     {
@@ -50,6 +51,10 @@ import Cart from "../Pagse/DashboardPagse/Cart/Cart";
         {
           path:'cart',
           element: <Cart></Cart>
+        },
+        {
+          path:'allUsers',
+          element:<Users></Users>
         }
       ]
     }
