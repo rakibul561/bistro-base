@@ -3,14 +3,15 @@ import { FaAd, FaBook, FaCalendar, FaEnvelope, FaHome, FaList, FaShoppingCart, F
 import { IoMenu } from "react-icons/io5";
 import { NavLink, Outlet } from "react-router-dom";
 import UseCarts from "../../Hooks/UseCarts";
+import useAdmin from "../../Hooks/useAdmin";
 
 const Dashboard = () => {
 
     const [cart] = UseCarts();
 
     // TODU: get isAdmin value from the database
-    const isAdmin = true;
-
+   
+    const [isAdmin] = useAdmin();
 
 
     return (

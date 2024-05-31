@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
-import { createUserWithEmailAndPassword, getAuth,GoogleAuthProvider , onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import { app } from "../Firebase/firebase.config";
+import usePublic from "../Hooks/usePublic";
 
 
 export const AuthContext = createContext(null);
@@ -11,6 +12,7 @@ const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true)
     const googleProvaider = new GoogleAuthProvider();
+    const axiosPublic = usePublic();
     //  create user 
     const createuser = (email, password) => {
         setLoading(true)
@@ -24,10 +26,10 @@ const AuthProvider = ({ children }) => {
     }
 
     // google login 
-    const gooogleSignIn =  () =>{
+    const gooogleSignIn = () => {
         setLoading(true)
         return signInWithPopup(auth, googleProvaider);
-         
+
     }
 
     //  logout 
@@ -35,24 +37,37 @@ const AuthProvider = ({ children }) => {
         setLoading(true)
         return signOut(auth)
     }
-   
-    const updateUserProfile = ({name, photo}) =>{
+
+    const updateUserProfile = ({ name, photo }) => {
         return updateProfile(auth.currentUser, {
-            displayName: name,  photoURL: photo
-          })
+            displayName: name, photoURL: photo
+        })
     }
 
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, currentUser => {
             setUser(currentUser);
-            console.log('current user', currentUser);
             setLoading(false);
+            if (currentUser) {
+                const userInfo = { email: currentUser.email };
+                axiosPublic.post('/jwt',userInfo)
+                .then(res =>{
+                    if(res.data.token){
+                        localStorage.setItem('access-token', res.data.token);
+                    }
+                })
+                // get token ans store client
+            }
+            else {
+                localStorage.removeItem('access-token');
+                // TODU: remove token (if token stored in the client)
+            }
         });
         return () => {
             return unsubscribe();
         }
-    }, [])
+    }, [axiosPublic])
 
 
 
