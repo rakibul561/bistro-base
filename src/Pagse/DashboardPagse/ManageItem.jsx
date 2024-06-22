@@ -1,12 +1,42 @@
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import useMenu from "../../Hooks/UseMenu";
 import SectionTitle from "../../component/SectionTitle";
+import Swal from "sweetalert2";
+import UseAxiosSecure from "../../Hooks/UseAxios";
+import { Link } from "react-router-dom";
 
 
 const ManageItem = () => {
-    const [menu] = useMenu();
+    const [menu, , refetch] = useMenu();
+    const axiosSecure = UseAxiosSecure();
 
-    const handleDeleteItem = item => {
+    const handleDeleteItem = (item) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const res = await axiosSecure.delete(`/menu/${item._id}`)
+                console.log(item._id);
+                console.log(res.data.deletedCount);
+                if (res.data.deletedCount > 0) {
+                    refetch();
+                    Swal.fire({
+                        title: `${item.name} has been deleted`,
+                        text: "Your file has been deleted.",
+                        icon: "success"
+                    });
+
+                }
+
+
+            }
+        });
 
     }
 
@@ -52,11 +82,13 @@ const ManageItem = () => {
                                     </td>
                                     <td>${item.price}</td>
                                     <td>
-                                        <button
-                                           
-                                            className="btn btn-md bg-orange-500">
-                                            <FaEdit className="text-white text-2xl" />
-                                        </button>
+                                        <Link to={`/dashboard/updateItem/${item._id}`}>
+                                            <button
+
+                                                className="btn btn-md bg-orange-500">
+                                                <FaEdit className="text-white text-2xl" />
+                                            </button>
+                                        </Link>
                                     </td>
                                     <td>
                                         <button

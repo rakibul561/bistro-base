@@ -19,7 +19,6 @@ const Home = () => {
             <Call></Call>
             <AddCard></AddCard>
             <Featured></Featured>
-
             <Review></Review>
         </div>
     );

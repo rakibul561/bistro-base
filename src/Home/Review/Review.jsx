@@ -18,7 +18,7 @@ const Review = () => {
     const [reviews, setReviews] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:5000/review')
+        fetch('http://localhost:3000/review')
             .then(res => res.json())
             .then(data => setReviews(data))
     }, [])
@@ -42,7 +42,7 @@ const Review = () => {
                                 value={review.rating}
                                 readOnly
                             />
-                
+
                             <p className="py-8">{review.details}</p>
                             <h3 className="text-2xl text-orange-400">{review.name}</h3>
                         </div>
