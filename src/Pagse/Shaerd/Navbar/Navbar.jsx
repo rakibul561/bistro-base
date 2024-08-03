@@ -15,23 +15,19 @@ const Navbar = () => {
     }
 
     const navLinks = (
-        <>
-            <li><Link to='/'>Home</Link></li>
-            <li><Link to='/menu'>Our Menu</Link></li>
-            <li><Link to='/order/salad'>Order Food</Link></li>
-            <li><Link to='/secret'>Secret</Link></li>
+        <div className="space-x-8">
+            <a><Link to='/'>Home</Link></a>
+            <a><Link to='/menu'>Our Menu</Link></a>
+            <a><Link to='/order/salad'>Order Food</Link></a>
+            {/* <a><Link to='/secret'>Secret</Link></a> */}
             <Link to='/dashboard/cart'>
-                <button className="btn btn-sm">
+                <a className="btn btn-sm">
                     <FaShoppingCart />
                     <div className="badge badge-secondary">+{cart.length}</div>
-                </button>
+                </a>
             </Link>
-            {user ? (
-                <button onClick={handleLogout} className="btn btn-sm btn-ghost">Logout</button>
-            ) : (
-                <li><Link to='/login'>Login</Link></li>
-            )}
-        </>
+            
+        </div>
     );
 
     return (
@@ -41,23 +37,28 @@ const Navbar = () => {
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
                     </div>
-                    <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+                    <ul tabIndex={0} className="menu text-black menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
                         {navLinks}
                     </ul>
                 </div>
-                <a className="btn btn-ghost text-xl">Bistro Boss</a>
+                <Link className="btn btn-ghost text-xl">Bistro Boss</Link>
             </div>
             <div className="navbar-center hidden lg:flex">
-                <ul className="menu menu-horizontal px-1">
+                <ul className="menu menu-horizontal  px-1">
                     {navLinks}
                 </ul>
             </div>
             <div className="navbar-end">
-                {user ? (
+                {/* {user ? (
                     <img src={user.photoURL} alt="User Avatar" className="w-10 h-10 rounded-full" />
                 ) : (
                     <a className="btn">Button</a>
-                )}
+                )} */}
+                {user ? (
+                <button onClick={handleLogout} className="btn btn-outline btn-sm btn-error">Logout</button>
+            ) : (
+                <a><Link to='/login' className="btn btn-outline btn-sm btn-success">Login</Link></a>
+            )}
             </div>
         </div>
     );

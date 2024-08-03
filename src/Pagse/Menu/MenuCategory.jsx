@@ -1,7 +1,10 @@
+/* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
 import Cover from "../Shaerd/Cover/Cover";
 import MenuItem from "../Shaerd/MenuItem/MenuItem";
 const MenuCategory = ({ items, title, img }) => {
+    
+    
     return (
         <div className="pt-8">
             {title && <Cover img={img} title={title} ></Cover>}

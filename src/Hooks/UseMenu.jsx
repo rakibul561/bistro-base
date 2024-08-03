@@ -8,7 +8,7 @@ const useMenu = () => {
     // const [menu, setMenu] = useState([]);
     // const [loading, setLoading] = useState(true);
     // useEffect(() => {
-    //     fetch('http://localhost:3000/menu')
+    //     fetch('https://bistro-boss-server-inky-chi.vercel.app//bistro-boss-server-inky-chi.vercel.app/menu')
     //         .then(res => res.json())
     //         .then(data => {
     //             setMenu(data)
