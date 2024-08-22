@@ -17,6 +17,7 @@ import AdminRoutes from "./AdminRoutes";
 import ManageItem from "../Pagse/DashboardPagse/ManageItem";
 import UpdateItem from "../Pagse/DashboardPagse/UpdateItem/UpdateItem";
 import Payment from "../Pagse/DashboardPagse/Payment/Payment";
+import Contact from "../Pagse/Shaerd/Contact";
 
 export const router = createBrowserRouter([
   {
@@ -46,6 +47,10 @@ export const router = createBrowserRouter([
       {
         path: '/secret',
         element: <PrivetRoutes><Secret></Secret></PrivetRoutes>
+      },
+      {
+        path:'/contact',
+        element: <Contact></Contact>
       }
     ]
   },
